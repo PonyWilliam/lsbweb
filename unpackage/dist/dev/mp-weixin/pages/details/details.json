@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "预约充电",
+  "usingComponents": {
+    "u-button": "/node-modules/uview-ui/components/u-button/u-button",
+    "u-select": "/node-modules/uview-ui/components/u-select/u-select",
+    "u-modal": "/node-modules/uview-ui/components/u-modal/u-modal",
+    "date-time-picker": "/components/bory-dateTimePicker/bory-dateTimePicker"
+  }
+}

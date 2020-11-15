@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "u-modal": "/node-modules/uview-ui/components/u-modal/u-modal",
+    "u-card": "/node-modules/uview-ui/components/u-card/u-card",
+    "u-button": "/node-modules/uview-ui/components/u-button/u-button",
+    "u-line-progress": "/node-modules/uview-ui/components/u-line-progress/u-line-progress"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "navigationBarTitleText": "预约充电",
+  "usingComponents": {
+    "u-notice-bar": "/node-modules/uview-ui/components/u-notice-bar/u-notice-bar",
+    "u-swiper": "/node-modules/uview-ui/components/u-swiper/u-swiper",
+    "u-button": "/node-modules/uview-ui/components/u-button/u-button",
+    "u-select": "/node-modules/uview-ui/components/u-select/u-select",
+    "u-modal": "/node-modules/uview-ui/components/u-modal/u-modal",
+    "w-picker": "/components/w-picker/w-picker"
+  }
+}

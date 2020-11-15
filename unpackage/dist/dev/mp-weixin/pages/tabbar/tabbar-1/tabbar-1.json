@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "u-no-network": "/node-modules/uview-ui/components/u-no-network/u-no-network",
+    "u-modal": "/node-modules/uview-ui/components/u-modal/u-modal",
+    "touch-slide": "/components/touch-slide/touch-slide",
+    "u-card": "/node-modules/uview-ui/components/u-card/u-card"
+  }
+}
