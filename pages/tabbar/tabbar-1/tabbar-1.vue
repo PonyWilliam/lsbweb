@@ -229,7 +229,8 @@ export default {
 	text-align: center;
 	margin-top: 5px;
 	margin-bottom: 30px;
-	background:rgba(255,255,255,.75);
+	background:#fafafa;
+	min-height: 100%;
 	padding-bottom:30px;
 }
 .touchview{
