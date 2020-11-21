@@ -31,9 +31,7 @@
 				<!-- 同步footer插槽定义列表底部的显示效果 -->
 				<template v-slot:footer>
 					<view class="uni-footer">
-						<text class="uni-footer-text">评论</text>
-						<text class="uni-footer-text">点赞</text>
-						<text class="uni-footer-text">分享</text>
+
 					</view>
 				</template>
 			</uni-list-item>

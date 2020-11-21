@@ -44,15 +44,15 @@
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarBackgroundColor": "#F8F8F8",
-		"backgroundColor": "#F8F8F8",
+		"navigationBarBackgroundColor": "rgba(255,255,255,.75)",
+		"backgroundColor": "rgba(255,255,255,.75)",
 		"navigationBarTitleText": "基于北斗精准定位的可预约智能无人充电桩系统"
 	},
 	"tabBar": {
 		"borderStyle": "black",
-		"backgroundColor": "#333",
-		"color": "#8F8F94",
-		"selectedColor": "#fff",
+		"backgroundColor": "rgba(255,255,255,.85)",
+		"color": "#000",
+		"selectedColor": "#ef1212",
 		"list": [{
 				"pagePath": "pages/tabbar/tabbar-1/tabbar-1",
 				"iconPath": "static/img/tabbar/home.png",

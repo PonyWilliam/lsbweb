@@ -34,20 +34,23 @@
 		style="z-index: 2;"
 		class="touchview"
 		>
-		<text slot="title" style="background-color: #2C405A;
-							border-top-left-radius: 4px;
+		<text slot="title" style="background-color: #fff;
+							border-top-left-radius: 6px;
 							border-top-right-radius: 4px;
-							color: #FFFFFF;">附近的充电桩</text>
+							margin-left:4px;
+							text-shadow: 1px 2px 1px rgb(223,12,18);
+							
+							color: #ef1812;">附近的充电桩</text>
 				<view class="content">
-					<u-button class="button" @click="goNav()">一键导航</u-button>
-					<u-card title="附近的充电桩">
+					<button class="button findnearly" @click="findnearly()">一键导航</button>
+					<u-card :border="false" title="附近的充电桩">
 						<view class="" slot="body">
 							<view @click="goApoint" class="u-body-item u-flex u-row-between u-p-b-0" v-for="item in card" >
 								<view class="u-body-item-title u-line-2">{{item.names}} ---- {{item.content}}km</view>
 								<image :src="item.conver" mode="aspectFill"></image>
 							</view>
 						</view>
-						<view class="" slot="foot">已经到底了</u-icon></view>
+						<view class="" slot="foot">没有更多了哦</view>
 					</u-card>
 				</view>
 		</touch-slide>
@@ -128,6 +131,7 @@ export default {
 			method:'GET',
 			success: (res) => {
 				let i = 0;
+				let marker = []
 				for(let x of res.data){
 					this.card[i].names = x.names
 					this.card[i].cover = x.cover
@@ -145,10 +149,10 @@ export default {
 					templocation["cover"] = car
 					templocation["width"] = 40
 					templocation["height"] = 40
-					this.markers.push(templocation)
-					console.log(this.markers)
+					marker.push(templocation)
 					i+=1
 				}
+				this.markers = marker
 				uni.hideLoading()//全部数据加载完成，关闭loading层
 			}
 		})
@@ -177,12 +181,11 @@ export default {
 			//进入导航
 			//把地图继续调用成可见
 			this.mapIshidden = false;
-			let markers = this.markers
-			console.log('markers:'+markers)
+			console.log(this.markers)
 			var options = {
 				destination:{
-					latitude:Number(markers.latitude),
-					longitude:Number(markers.longitude)
+					latitude:Number(this.markers[0].latitude),
+					longitude:Number(this.markers[0].longitude)
 				}
 			}
 			Map.openMap(options,config.maptype)
@@ -190,6 +193,7 @@ export default {
 			/*uni.navigateTo({
 				url:'../../details/details'
 			})*/
+			this.goApoint()
 			
 		},
 		goApoint:function(){
@@ -231,23 +235,20 @@ export default {
 .touchview{
 	border-radius: 30px;
 }
-.content .button{
+.content .findnearly{
 	margin-top:10px;
 	width:calc(50% + 60px);
 	margin-left:calc(25% - 30px);
-}
-.content .button .findnearly{
+	border:0px;
+	border-radius: 15px;
 	display: block;
 	padding:5px 10px;
 	justify-content: center;
 	background:$u-type-primary-light;
-	box-shadow:1px 2px 3px #555,
-	-1px 2px 3px #555,
-	-1px -2px 3px #555,
-	1px -2px 3px #555;
 	color:$u-main-color;
 	border-radius: 15px;
-	backdrop-filter: blur(2px);
+	opacity: 0.89;
+	
 }
 	.u-card-wrap { 
 		background-color: $u-bg-color;

@@ -12,38 +12,43 @@
 		  :show-cancel-button="true"
 		  @confirm="doarrive()"
 		  ></u-modal>
-		<u-card title="ifs充电桩" v-for="item in orders" :sub-title="'订单日期:  ' + convertTimeStamp(item.now_time * 1000)" class="card">
-			<view class="body" slot="body">
-				<view class="body_content">
-					<view class="start_time">使用日期:{{convertTimeStamp(item.time_start * 1000)}}</view>
-					<view class="during">使用时长:{{Math.ceil((item.time_end - item.time_start)/60)}}分钟</view>
-					<view class="price">订单金额:{{item.price}}元</view>
-				</view>
-			</view>
-			<view class="footer" slot="foot" v-if="item.arrive==0 && nowtime>item.time_end">
-				已销毁
-			</view>
-			<view v-else-if="item.arrive==0" class="footer" slot="foot">
-				<view class="text">未到达</view>
-				<view class="button"><u-button @click="goarrive(item.id,item.time_start)" class="primary">我已到达</u-button></view>
-			</view>
-			<view v-else-if="item.is_payed" class="footer" slot="foot">
-				已完成
-			</view>
-			<view v-else class="footer" style="flex-wrap: wrap;align-items: center;" slot="foot" >
-				<view class="text">未支付</view>
-				<view class="button"><u-button v-if="nowtime>item.time_end" @click="gopay(item.id)" class="primary">去支付</u-button></view>
-				<view class="chargebar" style="width:100%; margin-top:10px">
-					充电进度:
-					<u-line-progress v-if="Date.parse(new Date())/1000<item.time_end" style="" :striped="true" :percent="(Math.floor(item.better + ((Date.parse(new Date())/1000 - item.arrive_time)/(item.time_end - item.time_start))*(100-item.better)*((item.time_end - item.time_start)/4800)))" :striped-active="true">
-						{{Math.floor(item.better + ((Date.parse(new Date())/1000 - item.arrive_time)/(item.time_end - item.time_start))*(100-item.better)*((item.time_end - item.time_start)/4800))}}%
-					</u-line-progress>
-					<u-line-progress v-else style="" :striped="true" :percent="(Math.floor(item.better + ((item.time_end - item.arrive_time)/(item.time_end - item.time_start))*(100-item.better)*((item.time_end - item.time_start)/4800)))" :striped-active="true">
-						{{Math.floor(item.better + ((item.time_end - item.arrive_time)/(item.time_end - item.time_start))*(100-item.better)*((item.time_end - item.time_start)/4800))}}%
-					</u-line-progress>
-				</view>
-			</view>
-		</u-card>
+		 <view class="main">
+			 <u-card :border="false" title="ifs充电桩" v-for="item in orders" :sub-title="'订单日期:  ' + convertTimeStamp(item.now_time * 1000)" class="card">
+			 	<view class="body" slot="body">
+			 		<view class="body_content">
+			 			<view class="start_time">使用日期:{{convertTimeStamp(item.time_start * 1000)}}</view>
+			 			<view class="during">使用时长:{{Math.ceil((item.time_end - item.time_start)/60)}}分钟</view>
+			 			<view class="price">订单金额:{{item.price}}元</view>
+			 		</view>
+			 	</view>
+			 	<view class="footer" slot="foot" v-if="item.arrive==0 && nowtime>item.time_end">
+			 		已违约(规定时间未到达)
+			 	</view>
+			 	<view v-else-if="item.arrive==0" class="footer" slot="foot">
+			 		<view class="text">未到达</view>
+			 		<view class="button"><u-button @click="goarrive(item.id,item.time_start)" class="primary">我已到达</u-button></view>
+			 	</view>
+			 	<view v-else-if="item.is_payed" class="footer" slot="foot">
+			 		已完成
+			 	</view>
+			 	<view v-else class="footer" style="flex-wrap: wrap;align-items: center;" slot="foot" >
+			 		<view class="text">未支付</view>
+			 		<view class="button"><u-button v-if="nowtime>item.time_end" @click="gopay(item.id)" class="primary">去支付</u-button></view>
+			 		<view v-if="Date.parse(new Date())/1000 >= item.time_start" class="chargebar" style="width:100%; margin-top:10px">
+			 			充电进度:
+			 			<u-line-progress v-if="item.arrive_time < item.start_time" :striped="true" :percent="(Math.floor(item.better + ((Date.parse(new Date())/1000 - item.time_start)/(item.time_end - item.time_start))*(100-item.better)*((item.time_end - item.time_start)/4800)))" :striped-active="true">
+			 				{{Math.floor(item.better + ((Date.parse(new Date())/1000 - item.item.time_start)/(item.time_end - item.time_start))*(100-item.better)*((item.time_end - item.time_start)/4800))}}%
+			 			</u-line-progress>
+			 			<u-line-progress v-else-if="Date.parse(new Date())/1000<item.time_end" :striped="true" :percent="(Math.floor(item.better + ((Date.parse(new Date())/1000 - item.arrive_time)/(item.time_end - item.time_start))*(100-item.better)*((item.time_end - item.time_start)/4800)))" :striped-active="true">
+			 				{{Math.floor(item.better + ((Date.parse(new Date())/1000 - item.arrive_time)/(item.time_end - item.time_start))*(100-item.better)*((item.time_end - item.time_start)/4800))}}%
+			 			</u-line-progress>
+			 			<u-line-progress v-else :striped="true" :percent="(Math.floor(item.better + ((item.time_end - item.arrive_time)/(item.time_end - item.time_start))*(100-item.better)*((item.time_end - item.time_start)/4800)))" :striped-active="true">
+			 				{{Math.floor(item.better + ((item.time_end - item.arrive_time)/(item.time_end - item.time_start))*(100-item.better)*((item.time_end - item.time_start)/4800))}}%
+			 			</u-line-progress>
+			 		</view>
+			 	</view>
+			 </u-card>
+		 </view>
 		<view v-if="!orders[0]" style="display: flex;align-items: center;box-align:center;"><h3 style="text-align:center;:32px;line-height:46px;">啊哦，暂时没有订单哦</h3></view>
 		<!--
 		<u-card :title="title" :sub-title="subTitle" class="card">
@@ -59,7 +64,7 @@
 			</view>
 		</u-card>
 		-->
-		
+		<strong></strong>
 	</view>
 </template>
 
@@ -119,11 +124,11 @@
 				})
 			},
 			goarrive:function(id,time){
-				if(Date.parse(new Date())/1000 < time){
+				if(Date.parse(new Date())/1000 < time-3600 * 4){
 					uni.showModal({
+						showCancel:false,
 						title:'失败',
-						content:'未到预约时间',
-						showCancel:false
+						content:'最多提前4小时到达'
 					})
 					return
 				}
@@ -168,7 +173,16 @@
 </script>
 
 <style>
+	.content{
+		background:#efefef;
+		min-height:100%;
+		padding:20px 0;
+	}
+	.main{
+		
+	}
 	.card{
+		border:none;
 		font-size:14px;
 	}
 	.card .body{
