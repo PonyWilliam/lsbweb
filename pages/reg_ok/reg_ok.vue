@@ -12,7 +12,6 @@
 			</view>
 		
 
-		<view class="loading">加载中</view>
 		<view class="ymBbottom"></view>
 	</view>
 </template>
