@@ -28,11 +28,11 @@
 				</view>
 			</view>
 			
-			<view class="submit"><u-button class="appointment" @click="submitgo">确认预约</u-button></view>
+			<view class="submit"><u-button class="appointment" @click="gogogo=true">确认预约</u-button></view>
 			<u-select @confirm="confirm" v-model="showlist" :list="list"></u-select>
 			<u-select @confirm="confirm2" v-model="showlist2" :list="timelist2"></u-select>
 			<u-select @confirm="confirm3" v-model="showlist3" :list="parkid"></u-select>
-			<u-modal content="预约成功" v-model="gogogo" @confirm="goOrder"></u-modal>
+			<u-modal content="是否确认预约" v-model="gogogo" @confirm="submitgo" :show-cancel-button="true"></u-modal>
 			<w-picker
 				:visible.sync="dateVisible1"
 				mode="date" 
@@ -144,7 +144,9 @@
 				let timestamp = new Date(time.result).getTime()/1000
 				if(timestamp<new Date().getTime()/1000){
 					uni.showModal({
-						content:'预约时间不能早于当前时间'
+						content:'预约时间不能早于当前时间',
+						showCancel:false
+						
 					})
 					uni.hideLoading()
 				}else{
@@ -182,12 +184,6 @@
 				//选择时间事件
 				
 			},
-			goOrder:function(){
-				//去看订单
-				uni.reLaunch({
-					url:'../tabbar/tabbar-4/tabbar-4'
-				})
-			},
 			openDuring:function(){
 				this.showlist2 = true
 			},
@@ -214,14 +210,18 @@
 						},
 						success: (res) => {
 							console.log(res.data)
-							this.gogogo = true
-							uni.hideLoading()
+							uni.hideLoading()//预约成功，跳转预约成功界面
+							setTimeout(function(){},500);//做个延迟
+							uni.redirectTo({
+								url:'/pages/reg_ok/reg_ok'
+							})
 						}
 					})
 				}else{
 					uni.showModal({
 						title:'error',
-						content:'请填写完数据再提交'
+						content:'请填写完数据再提交',
+						showCancel:false
 					})
 				}
 			},

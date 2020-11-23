@@ -40,13 +40,19 @@
                 "navigationBarTitleText": "预约充电"
             }
             
-        }
+        },
+		{
+			"path":"pages/reg_ok/reg_ok",
+			"style":{
+				
+			}
+		}
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarBackgroundColor": "rgba(255,255,255,.75)",
-		"backgroundColor": "rgba(255,255,255,.75)",
-		"navigationBarTitleText": "基于北斗精准定位的可预约智能无人充电桩系统"
+		"navigationBarBackgroundColor": "#fff",
+		"backgroundColor": "#fff",
+		"navigationBarTitleText": "惠充电智能充电桩"
 	},
 	"tabBar": {
 		"borderStyle": "black",
