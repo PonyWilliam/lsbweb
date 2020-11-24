@@ -1,6 +1,6 @@
 var config = {
 	url:'https://lsbserver.dadiqq.cn/',
-	maptype:'gcj-02',
+	maptype:'gcj02',
 	
 }
 export {config}

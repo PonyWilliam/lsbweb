@@ -111,49 +111,7 @@ export default {
 		};
 	},
 	onLoad() {
-		uni.showLoading({
-			title:"正在加载"
-		})
-		uni.getLocation({
-			type:config.maptype,
-			success: (res) => {
-				//获取当前所在位置，并将maps内部的值更新，让地图中心点定位到这个地方
-				const latitude = res.latitude
-				const longitude = res.longitude
-				this.maps.longitude = res.longitude
-				this.maps.latitude = res.latitude
-				uni.request({
-					url:config.url + 'find',
-					method:'GET',
-					success: (res) => {
-						let i = 0;
-						let marker = []
-						for(let x of res.data){
-							this.card[i].names = x.names
-							this.card[i].cover = x.cover
-							let temp_lat = x.lat
-							let temp_lng = x.lng
-							let distance = calc.Distance(temp_lat,temp_lng,
-							this.maps.latitude,this.maps.longitude)
-							//调用封装的distance去计算距离
-							this.card[i].content = distance
-							var templocation = {}
-							templocation["id"] = Number(i)
-							templocation["latitude"] = Number(temp_lat)
-							templocation["longitude"] = Number(temp_lng)
-							templocation["title"] = x.names
-							templocation["cover"] = car
-							templocation["width"] = 40
-							templocation["height"] = 40
-							marker.push(templocation)
-							i+=1
-						}
-						this.markers = marker
-						uni.hideLoading()//全部数据加载完成，关闭loading层
-					}
-				})
-			}
-		})
+		this.init();
 	},
 	mounted(){
 		const _this = this;
@@ -167,6 +125,55 @@ export default {
 		})
 	},
 	methods: {
+		init:function(){
+			uni.showLoading({
+				title:"正在加载"
+			})
+			uni.getLocation({
+				type:config.maptype,
+				success: (res) => {
+					//获取当前所在位置，并将maps内部的值更新，让地图中心点定位到这个地方
+					const latitude = res.latitude
+					const longitude = res.longitude
+					this.maps.longitude = res.longitude
+					this.maps.latitude = res.latitude
+					uni.request({
+						url:config.url + 'find',
+						method:'GET',
+						success: (res) => {
+							let i = 0;
+							let marker = []
+							for(let x of res.data){
+								this.card[i].names = x.names
+								this.card[i].cover = x.cover
+								let temp_lat = x.lat
+								let temp_lng = x.lng
+								let distance = calc.Distance(temp_lat,temp_lng,
+								this.maps.latitude,this.maps.longitude)
+								//调用封装的distance去计算距离
+								this.card[i].content = distance
+								var templocation = {}
+								templocation["id"] = Number(i)
+								templocation["latitude"] = Number(temp_lat)
+								templocation["longitude"] = Number(temp_lng)
+								templocation["title"] = x.names
+								templocation["cover"] = car
+								templocation["width"] = 40
+								templocation["height"] = 40
+								marker.push(templocation)
+								i+=1
+							}
+							this.markers = marker
+							uni.hideLoading()
+						}
+					})
+				},fail: (err) => {
+					console.log(err)
+					uni.hideLoading()
+					this.init();//死循环
+				}
+			})
+		},
 		showmap:function(){
 			this.mapIshidden = false
 		},

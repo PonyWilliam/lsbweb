@@ -13,7 +13,7 @@
 		  @confirm="doarrive()"
 		  ></u-modal>
 		 <view class="main">
-			 <u-card :border="false" title="ifs充电桩" v-for="item in orders" :sub-title="'订单日期:  ' + convertTimeStamp(item.now_time * 1000)" class="card">
+			 <u-card :border="false" title="智芯科技楼充电桩" v-for="item in orders" :sub-title="'订单日期:  ' + convertTimeStamp(item.now_time * 1000)" class="card">
 			 	<view class="body" slot="body">
 			 		<view class="body_content">
 			 			<view class="start_time">使用日期:{{convertTimeStamp(item.time_start * 1000)}}</view>
