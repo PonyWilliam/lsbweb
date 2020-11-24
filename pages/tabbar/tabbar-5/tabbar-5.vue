@@ -9,7 +9,7 @@
 					<view class="profily_header">
 
 					</view>
-					<text>test账号</text>
+					<text>用户1</text>
 					<image src="../../../static/fumou-center-template/setting.png" mode=""></image>
 				</view>
 				<view class="order_status">

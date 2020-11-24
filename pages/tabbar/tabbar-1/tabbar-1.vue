@@ -100,12 +100,12 @@ export default {
 			card:[{
 				names:'加载中...',
 				content:'加载中...',
-				conver:'https://img12.360buyimg.com/n7/jfs/t1/102191/19/9072/330688/5e0af7cfE17698872/c91c00d713bf729a.jpg'
+				conver:'http://lsb.dadiqq.cn/1.jpeg'
 			},
 			{
 				names:'加载中...',
 				content:'加载中...',
-				conver:'https://img12.360buyimg.com/n7/jfs/t1/102191/19/9072/330688/5e0af7cfE17698872/c91c00d713bf729a.jpg'
+				conver:'http://lsb.dadiqq.cn/1.jpeg'
 			}],
 			markers:[]
 		};
@@ -122,38 +122,36 @@ export default {
 				const longitude = res.longitude
 				this.maps.longitude = res.longitude
 				this.maps.latitude = res.latitude
-				console.log(this.$data.maps.latitude)
-				console.log(this.$data.maps.longitude)
-			}
-		})
-		uni.request({
-			url:config.url + 'find',
-			method:'GET',
-			success: (res) => {
-				let i = 0;
-				let marker = []
-				for(let x of res.data){
-					this.card[i].names = x.names
-					this.card[i].cover = x.cover
-					let temp_lat = x.lat
-					let temp_lng = x.lng
-					let distance = calc.Distance(temp_lat,temp_lng,
-					this.maps.latitude,this.$data.maps.longitude)
-					//调用封装的distance去计算距离
-					this.card[i].content = distance
-					var templocation = {}
-					templocation["id"] = Number(i)
-					templocation["latitude"] = Number(temp_lat)
-					templocation["longitude"] = Number(temp_lng)
-					templocation["title"] = x.names
-					templocation["cover"] = car
-					templocation["width"] = 40
-					templocation["height"] = 40
-					marker.push(templocation)
-					i+=1
-				}
-				this.markers = marker
-				uni.hideLoading()//全部数据加载完成，关闭loading层
+				uni.request({
+					url:config.url + 'find',
+					method:'GET',
+					success: (res) => {
+						let i = 0;
+						let marker = []
+						for(let x of res.data){
+							this.card[i].names = x.names
+							this.card[i].cover = x.cover
+							let temp_lat = x.lat
+							let temp_lng = x.lng
+							let distance = calc.Distance(temp_lat,temp_lng,
+							this.maps.latitude,this.maps.longitude)
+							//调用封装的distance去计算距离
+							this.card[i].content = distance
+							var templocation = {}
+							templocation["id"] = Number(i)
+							templocation["latitude"] = Number(temp_lat)
+							templocation["longitude"] = Number(temp_lng)
+							templocation["title"] = x.names
+							templocation["cover"] = car
+							templocation["width"] = 40
+							templocation["height"] = 40
+							marker.push(templocation)
+							i+=1
+						}
+						this.markers = marker
+						uni.hideLoading()//全部数据加载完成，关闭loading层
+					}
+				})
 			}
 		})
 	},

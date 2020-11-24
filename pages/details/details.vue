@@ -78,8 +78,8 @@
 				msg:[
 					'目前只能预约当日24时前的充电任务，给您带来的不便敬请谅解',
 				],
-				select:'ifs充电桩',
-				area_id:1,
+				select:'',
+				area_id:null,
 				select2:'',
 				time:'',
 				select3:'',
